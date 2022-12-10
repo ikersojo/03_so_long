@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/10 17:50:39 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/10 20:39:51 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ OBJ	=	$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 
 ## Compilation flags:
 CC			=	gcc
-CFLAGS		=	#-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
 
 ## Extras:
@@ -68,7 +68,7 @@ libft:
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 			@mkdir -p $(OBJDIR)
-			@printf "$(BLUE)Compiling: $< $(DEF_COLOR)"
+			@printf "$(BLUE)Compiling: $< ...$(DEF_COLOR)"
 			@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 			@echo "$(GREEN)Done!$(DEF_COLOR)"
 
@@ -78,9 +78,11 @@ clean:
 			@$(MAKE) -C $(LIBFT) clean
 			@$(MAKE) -C $(LIBMLX) clean
 
-fclean:		clean
+fclean:	
 			@$(MAKE) -C $(LIBFT) fclean
 			@$(MAKE) -C $(LIBMLX) fclean
+			@$(RM) $(OBJ) $(OBJDIR)
+			@echo "$(YELLOW)$(NAME) object files removed!$(DEF_COLOR)"
 			@$(RM) $(NAME) $(BINDIR)
 			@echo "$(RED)$(NAME) removed!$(DEF_COLOR)"
 

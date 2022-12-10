@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/09 17:19:02 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/10 20:39:51 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -63,12 +63,12 @@ $(NAME):	$(OBJS)
 
 %.o: %.c
 			@echo $(OBJS)
-			@echo -n "$(BLUE)Compiling: $(notdir $<)... $(DEF_COLOR)"
+			@echo -n "$(BLUE)Compiling: $(notdir $<) ...$(DEF_COLOR)"
 			@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 			@echo "$(GREEN)Done!$(DEF_COLOR)"
 
 %.o: %.m
-			@printf "$(BLUE)Compiling: $(notdir $<)... $(DEF_COLOR)"
+			@printf "$(BLUE)Compiling: $(notdir $<) ...$(DEF_COLOR)"
 			@$(CC) $(CFLAGS) -o $@ -c $< $(HEADERS)
 			@echo "$(GREEN)Done!$(DEF_COLOR)"
 
