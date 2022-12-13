@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/10 20:39:51 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/12 19:34:36 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,11 +78,13 @@ clean:
 			@$(MAKE) -C $(LIBFT) clean
 			@$(MAKE) -C $(LIBMLX) clean
 
-fclean:	
+fclean:
 			@$(MAKE) -C $(LIBFT) fclean
 			@$(MAKE) -C $(LIBMLX) fclean
-			@$(RM) $(OBJ) $(OBJDIR)
-			@echo "$(YELLOW)$(NAME) object files removed!$(DEF_COLOR)"
+			@if [ -d $(OBJDIR) ]; then \
+				$(RM) $(OBJ) $(OBJDIR); \
+				echo "$(YELLOW)$(NAME) object files removed!$(DEF_COLOR)"; \
+			fi
 			@$(RM) $(NAME) $(BINDIR)
 			@echo "$(RED)$(NAME) removed!$(DEF_COLOR)"
 

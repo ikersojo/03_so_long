@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 20:03:30 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/10 20:10:15 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/12 22:51:42 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ char	*ft_get_user_input(char *str)
 	i = 0;
 	while (bytes > 0 && c != '\0' && i < 395)
 	{
-		*(line + i++) = c;
 		if (c == '\n')
 			break ;
+		*(line + i++) = c;
 		bytes = read(0, &c, 1);
 	}
 	*(line + i) = '\0';

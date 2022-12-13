@@ -6,15 +6,22 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:55:39 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/10 20:10:42 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/12 19:39:37 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# define DEF_COLOR "\033[0;39m"
+# define GRAY "\033[0;90m"
 # define RED "\033[0;31m"
 # define GREEN "\033[0;92m"
+# define YELLOW "\033[0;93m"
+# define BLUE "\033[0;94m"
+# define MAGENTA "\033[0;95m"
+# define CYAN "\033[0;96m"
+# define WHITE "\033[0;97m"
 
 # include <unistd.h>
 # include <stdlib.h>
