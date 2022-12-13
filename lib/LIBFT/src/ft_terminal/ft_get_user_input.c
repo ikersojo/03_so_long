@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/10 20:03:30 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/12 22:51:42 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/13 20:28:01 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ char	*ft_get_user_input(char *str)
 
 	ft_putstr_fd(str, 1);
 	line = (char *)malloc(400);
+	if (!line)
+		return (NULL);
 	bytes = read(0, &c, 1);
 	i = 0;
 	while (bytes > 0 && c != '\0' && i < 395)
