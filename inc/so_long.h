@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/17 22:39:11 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:42:16 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,12 @@
 // imgae datatype
 typedef struct s_img
 {
+	void	*content;
 	void	*img_ptr;
 	char	*addr;
 	int		bpp;
 	int		line_len;
-	int		end;
+	int		endian;
 }			t_img;
 
 // gui datatype

@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/17 23:15:43 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:33:24 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	ft_close_game(t_game *game)
 	free(game->gui);
 	free(game);
 	//...no function to delete "display": potential leaks...
-	ft_printf("all memmory freed. exiting game...\n"); //DEBUG
+	ft_printf("Exiting game...\n"); //DEBUG
 	exit(EXIT_SUCCESS);
 }
 
@@ -31,6 +31,7 @@ int	ft_on_destroy(int keycode, void *param)
 {
 	(void)keycode;
 	(void)param;
+	ft_printf("Exiting game...\n"); //DEBUG
 	exit(EXIT_SUCCESS);
 	return (0);
 }

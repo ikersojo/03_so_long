@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/17 23:27:37 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/17 23:42:59 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,21 +62,21 @@ int	main(int argc, char **argv, char **envp)
 	game->gui->img->img_ptr = mlx_new_image(game->gui->mlx, game->gui->width, \
 											game->gui->height);
 	game->gui->img->addr = mlx_get_data_addr(game->gui->img->img_ptr, \
-		&game->gui->img->bpp, &game->gui->img->line_len, &game->gui->img->end);
+		&game->gui->img->bpp, &game->gui->img->line_len, &game->gui->img->endian);
 
 
 	// Display image
 	int	width;
 	int	height;
-	game->gui->img = mlx_xpm_file_to_image(game->gui->mlx, \
-		"./assets/img48x48/xpm/player/player_1.xpm", &width, &height);
-	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img, 10, 10);
+	game->gui->img->content = mlx_xpm_file_to_image(game->gui->mlx, \
+		"./assets/img48x48/xpm/floor/snow.xpm", &width, &height);
+	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img->content, 10, 10);
 
 	// Starting conditions:
 	// ----------------------------------------
 	ft_printf("\n\nAllocated in GUI:\n--------------\n");
 	ft_printf("ptr to game: %p\nptr to gui: %p\nptr to win: %p\ntitle: %s\nwidth: %d\nheight: %d\n\n", game, game->gui, game->gui->win, game->gui->title, game->gui->width, game->gui->height);
-	ft_printf("img: %p\nimg_ptr: %p\naddr: %s(%p)\nbpp: %d\nline_len: %d\nendian: %d\n\n", game->gui->img, game->gui->img->img_ptr, game->gui->img->addr, game->gui->img->addr, game->gui->img->bpp, game->gui->img->line_len, game->gui->img->end);
+	ft_printf("img: %p\nimg_content: %p\nimg_ptr: %p\naddr: %s(%p)\nbpp: %d\nline_len: %d\nendian: %d\n\n", game->gui->img, game->gui->img->content, game->gui->img->img_ptr, game->gui->img->addr, game->gui->img->addr, game->gui->img->bpp, game->gui->img->line_len, game->gui->img->endian);
 	// ----------------------------------------
 
 	// DEFINE HOOKS:
