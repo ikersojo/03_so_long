@@ -5,128 +5,89 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/10 17:32:20 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/13 09:46:25 by isojo-go         ###   ########.fr       */
+/*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
+/*   Updated: 2022/12/17 23:27:37 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../lib/LIBFT/inc/libft.h"
-#include "../lib/LIBMLX/inc/mlx.h"
-#include <fcntl.h>
+#include "../inc/so_long.h"
 
-// Key Codes for MacOS
-#define KEY_ESC		53
-#define KEY_W		13
-#define KEY_A		0
-#define KEY_S		1
-#define KEY_D		2
-#define KEY_R		15
-#define KEY_Q		12
-#define KEY_UP		126
-#define KEY_DOWN	125
-#define KEY_LEFT	123
-#define KEY_RIGHT	124
-
-// pointer to window
-typedef struct s_win
-{
-	void	*win_ptr;
-	char	*title; // opcion de usar [80] para evitar el malloc y el free
-	int		width;
-	int		height;
-}			t_win;
-
-// pointer to image
-typedef struct s_img
-{
-	void	*img_ptr;
-	char	*addr;
-	int		bpp; // bits_per_pixel
-	int		line_len;
-	int		endian; // 0 little endian: ordenado de más a menos (MacOS) -> ordena la info al reves! (blue, green, red, alpha)
-}			t_img;
-
-// aux function 1
-void	my_mlx_pixel_put(t_img *img, int x, int y, int color)
-{
-	char	*dst;
-
-	dst = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(unsigned int*)dst = color;
-}
-
-void	my_rectangle(t_img *img, int width, int height, int color)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < width)
-	{
-		j = 0;
-		while (j < height)
-		{
-			my_mlx_pixel_put(img, i, j, color);
-			j++;
-		}
-		i++;
-	}
-}
-
-// main function
 int	main(int argc, char **argv, char **envp)
 {
-	void	*mlx;
-	t_win	*win;
-	t_img	*img;
+	t_game	*game;
 
 	(void)argc;
 	(void)argv;
+	(void)envp;
 
-	mlx = mlx_init();
-	if (mlx == NULL)
+	// TODO:
+		// Check user input to console
+		// Check map
+		// Check map file extension
+		// Check map file content (valid chars, required min chars, square size, closed, floodfill) --> Save sizes (w x h) for gui generation
+		// Initialize gui
+		// Define Events and Hooks
+		// Start game
+
+	// allocate memmory for game
+	game = (t_game *)malloc(sizeof(t_game));
+	if (game == NULL)
 		ft_exit_w_error("errno");
-	win = (t_win *)malloc(sizeof(t_win));
-	if (win == NULL)
-		ft_exit_w_error("errno");
-	img = (t_img *)malloc(sizeof(t_img));
-	if (img == NULL)
-		ft_exit_w_error("errno");
-
-	(*win).title = ft_get_user_input("Enter title: "); // to be modified (strdup?)
-	win->width = 1280; // to be modified with map
-	win->height = 800; // to be modified with map
-	win->win_ptr = mlx_new_window(mlx, win->width, win->height, win->title);
-	if (win->win_ptr == NULL)
+	game->x_pos = 0; // change with map
+	game->y_pos = 0; // change with map
+	// allocate memmory for gui
+	game->gui = (t_gui *)malloc(sizeof(t_gui));
+	if (game->gui == NULL)
 		ft_exit_w_error("errno");
 
-	img->img_ptr = mlx_new_image(mlx, win->width, win->height);
-	img->addr = mlx_get_data_addr(img->img_ptr, &img->bpp, &img->line_len, &img->endian);
+	// initialize mlx
+	game->gui->mlx = mlx_init();
+	if (game->gui->mlx == NULL)
+		ft_exit_w_error("errno");
 
-	//DEBUG:
-	ft_printf("win: %p\nwin_ptr: %p\ntitle: %s\nwidth: %d\nheight: %d\n\n", win, win->win_ptr, win->title, win->width, win->height);
-	ft_printf("img: %p\nimg_ptr: %p\naddr: %s(%p)\nbpp: %d\nline_len: %d\nendian: %d\n\n", img, img->img_ptr, img->addr, img->addr, img->bpp, img->line_len, img->endian);
+	// initialize the rest of params for gui
+	ft_strlcpy(game->gui->title, "so_long GUI", 39);
+	game->gui->width = 1200; // to be modified with map
+	game->gui->height = 800; // to be modified with map
+	game->gui->win = mlx_new_window(game->gui->mlx, game->gui->width, \
+									game->gui->height, game->gui->title);
+	if (game->gui->win == NULL)
+		ft_exit_w_error("errno");
+	// game->gui->img = NULL;
 
-	// my_mlx_pixel_put(img, 5, 5, 0x00FF0000);
-	my_rectangle(img, win->width, win->height, 0x00FF0000);
-	mlx_put_image_to_window(mlx, win->win_ptr, img->img_ptr, 0, 0);
-	my_rectangle(img, 50, 50, 0x0000FF00);
-	mlx_put_image_to_window(mlx, win->win_ptr, img->img_ptr, 100, 100);
+	// allocate memmory for images
+	game->gui->img = (t_img *)malloc(sizeof(t_img));
+	if (game->gui->img == NULL)
+		ft_exit_w_error("errno");
+	game->gui->img->img_ptr = mlx_new_image(game->gui->mlx, game->gui->width, \
+											game->gui->height);
+	game->gui->img->addr = mlx_get_data_addr(game->gui->img->img_ptr, \
+		&game->gui->img->bpp, &game->gui->img->line_len, &game->gui->img->end);
 
 
+	// Display image
+	int	width;
+	int	height;
+	game->gui->img = mlx_xpm_file_to_image(game->gui->mlx, \
+		"./assets/img48x48/xpm/player/player_1.xpm", &width, &height);
+	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img, 10, 10);
 
+	// Starting conditions:
+	// ----------------------------------------
+	ft_printf("\n\nAllocated in GUI:\n--------------\n");
+	ft_printf("ptr to game: %p\nptr to gui: %p\nptr to win: %p\ntitle: %s\nwidth: %d\nheight: %d\n\n", game, game->gui, game->gui->win, game->gui->title, game->gui->width, game->gui->height);
+	ft_printf("img: %p\nimg_ptr: %p\naddr: %s(%p)\nbpp: %d\nline_len: %d\nendian: %d\n\n", game->gui->img, game->gui->img->img_ptr, game->gui->img->addr, game->gui->img->addr, game->gui->img->bpp, game->gui->img->line_len, game->gui->img->end);
+	// ----------------------------------------
 
+	// DEFINE HOOKS:
+	// mlx_loop_hook(gui->mlx, ft_on_idle, &gui);
+	mlx_hook(game->gui->win, ON_DESTROY, 0, ft_on_destroy, &game);
+	mlx_hook(game->gui->win, ON_KEYDOWN, 0, ft_on_keydown, &game);
 
-
-
-	ft_printf("OS detected: ");
-	ft_run_command("uname", envp);
+	// Initialize GUI
 	ft_printf("Initializing GUI...\n");
+	mlx_loop(game->gui->mlx);
 
-	free (win->title);
-	mlx_loop(mlx);
 
-	// para salir borrar ventana
-	mlx_destroy_window(mlx, win->win_ptr);
 	return (EXIT_SUCCESS);
 }

@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/12 19:34:36 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/17 18:19:02 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,6 +36,7 @@ OBJ	=	$(SRC:$(SRCDIR)/%.c=$(OBJDIR)/%.o)
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
+DEBUG		=	-g3 -fsanitize=address
 
 ## Extras:
 ### Colors:
@@ -58,6 +59,11 @@ all:		libft libmlx $(NAME)
 $(NAME):	$(OBJ)
 			@mkdir -p $(BINDIR)
 			@$(CC) $(OBJ) $(LIBS) $(HEADERS) -o ./$(BINDIR)/$(NAME)
+			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
+
+debug:		$(OBJ)
+			@mkdir -p $(BINDIR)
+			@$(CC) $(OBJ) $(LIBS) $(HEADERS) -o ./$(BINDIR)/$(NAME) $(DEBUG)
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
 
 libmlx:
