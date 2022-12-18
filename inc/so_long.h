@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/17 23:42:16 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/18 09:58:48 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,14 @@
 # define ON_EXPOSE		12
 # define ON_DESTROY		17
 
+// Assets location
+# define IMG_COUNT	4
+# define FLOOR	"./assets/img48x48/xpm/floor/grass.xpm"
+# define WALL	"./assets/img48x48/xpm/wall/wall.xpm"
+# define COLL	"./assets/img48x48/xpm/collectable/coin_4.xpm"
+# define PLAYER	"./assets/img48x48/xpm/player/player_10.xpm"
+
+
 // imgae datatype
 typedef struct s_img
 {
@@ -67,7 +75,7 @@ typedef struct s_gui
 	char	title[40];
 	int		width;
 	int		height;
-	t_img	*img;
+	t_img	*img[4];
 }			t_gui;
 
 typedef struct s_game
@@ -75,6 +83,10 @@ typedef struct s_game
 	t_gui	*gui;
 	int		x_pos;
 	int		y_pos;
+	int		map_width;
+	int		map_height;
+	int		steps;
+	int		collectables;
 }			t_game;
 
 int		ft_on_destroy(int keycode, void *param);
