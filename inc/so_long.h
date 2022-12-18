@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/18 09:58:48 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/18 23:14:48 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,16 @@
 # define ON_DESTROY		17
 
 // Assets location
-# define IMG_COUNT	4
-# define FLOOR	"./assets/img48x48/xpm/floor/grass.xpm"
-# define WALL	"./assets/img48x48/xpm/wall/wall.xpm"
-# define COLL	"./assets/img48x48/xpm/collectable/coin_4.xpm"
-# define PLAYER	"./assets/img48x48/xpm/player/player_10.xpm"
+# define IMG_COUNT	7
+# define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
+# define WALL		"./assets/img48x48/xpm/floor/snow.xpm"
+# define COLL		"./assets/img48x48/xpm/collectable/coin_4.xpm"
+# define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
+# define PLAYER_U	"./assets/img48x48/xpm/player/player_up.xpm"
+# define PLAYER_L	"./assets/img48x48/xpm/player/player_left.xpm"
+# define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
 
-
-// imgae datatype
+// store all information of each image
 typedef struct s_img
 {
 	void	*content;
@@ -59,15 +61,7 @@ typedef struct s_img
 	int		endian;
 }			t_img;
 
-// gui datatype
-/* DETAIL ON IMAGES:
-img[0]: floor
-img[1]: wall
-img[2]: coin
-img[3]: exit
-img[4]: enemy
-img[5]: player
-*/
+// store all information about the window
 typedef struct s_gui
 {
 	void	*mlx;
@@ -75,22 +69,41 @@ typedef struct s_gui
 	char	title[40];
 	int		width;
 	int		height;
-	t_img	*img[4];
+	t_img	*img[IMG_COUNT];
 }			t_gui;
 
+// store all information about the map
+typedef struct s_map
+{
+	char	*path;
+	char	*content;
+	int		ok;
+	int		w;
+	int		h;
+	int		max_coll;
+}			t_map;
+
+// store all informatino about the map
 typedef struct s_game
 {
 	t_gui	*gui;
+	t_map	*map;
 	int		x_pos;
 	int		y_pos;
-	int		map_width;
-	int		map_height;
 	int		steps;
 	int		collectables;
 }			t_game;
 
+/*------POSSIBLE EVENTS------*/
 int		ft_on_destroy(int keycode, void *param);
 int		ft_on_keydown(int keycode, void *param);
 int		ft_on_idle(int keycode, void *param);
 void	ft_close_game(t_game *game);
+
+/*------PLAYER MOVEMENTS------*/
+void	ft_move_up(t_game *game);
+void	ft_move_down(t_game *game);
+void	ft_move_left(t_game *game);
+void	ft_move_right(t_game *game);
+
 #endif
