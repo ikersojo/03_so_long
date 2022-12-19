@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/18 23:14:48 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/19 22:11:17 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 // Assets location
 # define IMG_COUNT	7
 # define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
-# define WALL		"./assets/img48x48/xpm/floor/snow.xpm"
+# define WALL		"./assets/img48x48/xpm/wall/wall.xpm"
 # define COLL		"./assets/img48x48/xpm/collectable/coin_4.xpm"
 # define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
 # define PLAYER_U	"./assets/img48x48/xpm/player/player_up.xpm"
@@ -77,7 +77,6 @@ typedef struct s_map
 {
 	char	*path;
 	char	*content;
-	int		ok;
 	int		w;
 	int		h;
 	int		max_coll;
@@ -105,5 +104,8 @@ void	ft_move_up(t_game *game);
 void	ft_move_down(t_game *game);
 void	ft_move_left(t_game *game);
 void	ft_move_right(t_game *game);
+
+
+int		ft_check_map(char *str);
 
 #endif

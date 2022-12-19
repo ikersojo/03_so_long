@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/18 23:11:49 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/19 23:28:48 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,23 @@ void	ft_print_map(t_game *game)
 	int	j;
 
 	i = 0;
-	while (i < game->map->w)
+	while (i < game->map->h)
 	{
 		j = 0;
-		while (j < game->map->h)
+		while (j < game->map->w)
 		{
-			//if xxx
-			mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[0]->content, i * PX, j * PX);
+			mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[0]->content, j * PX, i * PX);
+			
+			//DEBUG, to be replaced by map content...
+			if (i == 0 || i == game->map->h - 1)
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[1]->content, j * PX, i * PX);
+			
 			j++;
 		}
 		i++;
 	}
 	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3]->content, game->x_pos * PX, (game->map->h - 1 - game->y_pos) * PX);
+
 }
 
 void	ft_load_imgs(t_game *game)
@@ -81,7 +86,7 @@ t_gui	*ft_initialize_gui(t_game *game)
 	return (gui);
 }
 
-t_game	*ft_initialize_game(void) //tendremos que pasarle el mapa
+t_game	*ft_initialize_game(char *map_file) //tendremos que pasarle el mapa
 {
 	t_game	*game;
 
@@ -105,14 +110,9 @@ t_game	*ft_initialize_game(void) //tendremos que pasarle el mapa
 
 static int	ft_ext_ok(char *str)
 {
-	char	*point;
-
-	point = ft_strrchr(str, '.');
-	if (point == NULL)
+	if (!ft_strnstr(str + ft_strlen(str) - 4, ".ber", 4))
 		return (0);
-	if (ft_strcmp(point, ".ber") == 0)
-		return (1);
-	return (0);
+	return (1);
 }
 
 int	main(int argc, char **argv)
@@ -121,7 +121,9 @@ int	main(int argc, char **argv)
 
 	if (argc == 2 && ft_ext_ok(*(argv + 1)))
 	{
-		game = ft_initialize_game(); //pasarle el mapa
+		ft_check_map(*(argv + 1));
+		game = ft_initialize_game(*(argv + 1)); //pasarle el mapa: game = ft_initialize_game(*(argv + 1));
+		
 		// DEFINE HOOKS:
 		// mlx_loop_hook(gui->mlx, ft_on_idle, &gui);
 		mlx_hook(game->gui->win, ON_DESTROY, 0, ft_on_destroy, &game);
