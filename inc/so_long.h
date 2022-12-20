@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 10:55:29 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:23:51 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,25 +51,25 @@
 # define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
 
 // store all information of each image
-typedef struct s_img
-{
-	void	*content;
-	void	*img_ptr;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}			t_img;
+// typedef struct s_img
+// {
+// 	void	*content;
+// 	void	*img_ptr;
+// 	char	*addr;
+// 	int		bpp;
+// 	int		line_len;
+// 	int		endian;
+// }			t_img;
 
 // store all information about the window
 typedef struct s_gui
 {
 	void	*mlx;
 	void	*win;
-	char	title[40];
+	// char	title[40];
 	int		width;
 	int		height;
-	t_img	*img[IMG_COUNT];
+	void	*img[IMG_COUNT];
 }			t_gui;
 
 // store all information about the map

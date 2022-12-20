@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 13:58:17 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:23:51 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ void	ft_print_map(t_game *game)
 		j = 0;
 		while (j < game->map->w)
 		{
-			mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[0]->content, j * PX, i * PX);
+			mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[0], j * PX, i * PX);
 			
 			//DEBUG, to be replaced by map content...
 			if (i == 0 || i == game->map->h - 1)
-				mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[1]->content, j * PX, i * PX);
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[1], j * PX, i * PX);
 			
 			j++;
 		}
 		i++;
 	}
-	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3]->content, game->x_pos * PX, (game->map->h - game->y_pos) * PX);
+	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3], game->x_pos * PX, (game->map->h - game->y_pos) * PX);
 
 }
 
@@ -54,15 +54,8 @@ void	ft_load_imgs(t_game *game)
 	i = 0;
 	while (i < IMG_COUNT)
 	{
-		game->gui->img[i] = (t_img *)malloc(sizeof(t_img));
-		if (game->gui->img[i] == NULL)
-			ft_exit_w_error("errno");
-		game->gui->img[i]->img_ptr = mlx_new_image(game->gui->mlx, game->gui->width, \
-												game->gui->height);
-		// game->gui->img[i]->addr = mlx_get_data_addr(game->gui->img[i]->img_ptr, \
-		// 	&game->gui->img[i]->bpp, &game->gui->img[i]->line_len, &game->gui->img[i]->endian);
-		game->gui->img[i]->content = mlx_xpm_file_to_image(game->gui->mlx, \
-			files[i], &width, &height);
+		game->gui->img[i] = mlx_xpm_file_to_image(game->gui->mlx, files[i], \
+			&width, &height);
 		i++;
 	}
 }
@@ -77,10 +70,10 @@ t_gui	*ft_initialize_gui(t_game *game)
 	gui->mlx = mlx_init();
 	if (gui->mlx == NULL)
 		ft_exit_w_error("errno");
-	ft_strlcpy(gui->title, "so_long GUI", 39);
+	// ft_strlcpy(gui->title, "so_long GUI", 39);
 	gui->width = game->map->w * PX;
 	gui->height = game->map->h * PX;
-	gui->win = mlx_new_window(gui->mlx, gui->width, gui->height, gui->title);
+	gui->win = mlx_new_window(gui->mlx, gui->width, gui->height, "so_long GUI");
 	if (gui->win == NULL)
 		ft_exit_w_error("errno");
 	return (gui);

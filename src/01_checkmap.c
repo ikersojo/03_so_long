@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:48:45 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 08:36:54 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:21:45 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,19 @@ static int	ft_check_rect(char *str, int *width, int *height)
 		line = ft_gnl(mapfd);
 		line_length = ft_strlen(line);
 		if (line_length == 0)
+		{
+			free (line);
 			break ;
+		}
 		if (*(line + line_length - 1) == '\n')
 			line_length -= 1;
 		if (*height == 0)
 			*width = line_length;
 		if (*width != line_length)
-				return (0);
+		{
+			free(line);
+			return (0);
+		}
 		(*height)++;
 		free (line);
 	}
@@ -74,7 +80,7 @@ static int	ft_check_chars(char *str, int *width, int *height, int *coll)
 	while (++i < *height)
 	{
 		line = ft_gnl(mapfd);
-		ft_printf("line: %s", line); // DEBUG
+		ft_printf("    %s", line); // DEBUG
 		if (i == 0 || i == *height - 1)
 		{
 			if (ft_count_chars(line, '1') != *width)
@@ -115,10 +121,10 @@ int	ft_check_map(char *str, int *width, int *height, int *coll)
 	*coll = 0;
 	if (ft_check_rect(str, width, height) == 0)
 		ft_exit_w_error("the maps does not have rectangular shape.\n");
-	ft_printf("\nmap is rectangular (w:%d x h:%d) \n", *width, *height); // DEBUG
+	ft_printf("\nmap is rectangular (w:%d x h:%d):\n\n", *width, *height); // DEBUG
 	if (ft_check_chars(str, width, height, coll) == 0)
 		ft_exit_w_error("the maps contains more/less chars than allowed.\n");
-	ft_printf("\nmap chars ok (w:%d x h:%d) (%d collectables)\n", *width, *height, *coll); // DEBUG
+	ft_printf("\n\nmap chars ok (%d collectables)\n\n", *coll); // DEBUG
 	// if (ft_feasibility(str, &width, &height) == 0)
 	// 	ft_exit_w_error("the maps cannot be completed.\n");
 	return (1);

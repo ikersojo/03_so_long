@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 13:54:54 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:30:55 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,12 @@
 void	ft_close_game(t_game *game)
 {
 	int	i;
+
 	i = 0;
 	while (i < IMG_COUNT)
 	{
-		ft_printf("img[%d]: (%p) - content (%p) - ptr(%p) - adrr(%p) being freed\n", i, game->gui->img[i], game->gui->img[i]->content, game->gui->img[i]->img_ptr, game->gui->img[i]->addr); // DEBUG
-		mlx_destroy_image(game->gui->mlx, game->gui->img[i]->img_ptr);
-		mlx_destroy_image(game->gui->mlx, game->gui->img[i]->content);
-		// mlx_destroy_image(game->gui->mlx, game->gui->img[i]->addr);
-		free(game->gui->img[i++]);
+		ft_printf("img[%d]: (%p) being freed\n", i, game->gui->img[i]); // DEBUG
+		mlx_destroy_image(game->gui->mlx, game->gui->img[i++]);
 	}
 
 	ft_printf("\nwin: (%p) being destroyed\n", game->gui->win); // DEBUG
@@ -90,7 +88,7 @@ int	ft_on_keydown(int keycode, void *param)
 // {
 // 	t_game	**game_ptr;
 // 	t_game	*game;
-
+// 
 // 	game_ptr = param;
 // 	game = *game_ptr;
 // 	(void)keycode;
