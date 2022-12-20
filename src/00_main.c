@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/19 23:28:48 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 13:58:17 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	ft_print_map(t_game *game)
 		}
 		i++;
 	}
-	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3]->content, game->x_pos * PX, (game->map->h - 1 - game->y_pos) * PX);
+	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3]->content, game->x_pos * PX, (game->map->h - game->y_pos) * PX);
 
 }
 
@@ -59,8 +59,8 @@ void	ft_load_imgs(t_game *game)
 			ft_exit_w_error("errno");
 		game->gui->img[i]->img_ptr = mlx_new_image(game->gui->mlx, game->gui->width, \
 												game->gui->height);
-		game->gui->img[i]->addr = mlx_get_data_addr(game->gui->img[i]->img_ptr, \
-			&game->gui->img[i]->bpp, &game->gui->img[i]->line_len, &game->gui->img[i]->endian);
+		// game->gui->img[i]->addr = mlx_get_data_addr(game->gui->img[i]->img_ptr, \
+		// 	&game->gui->img[i]->bpp, &game->gui->img[i]->line_len, &game->gui->img[i]->endian);
 		game->gui->img[i]->content = mlx_xpm_file_to_image(game->gui->mlx, \
 			files[i], &width, &height);
 		i++;
@@ -73,35 +73,63 @@ t_gui	*ft_initialize_gui(t_game *game)
 
 	gui = (t_gui *)malloc(sizeof(t_gui));
 	if (gui == NULL)
-		ft_exit_w_error("errno1");
+		ft_exit_w_error("errno");
 	gui->mlx = mlx_init();
 	if (gui->mlx == NULL)
-		ft_exit_w_error("errno2");
+		ft_exit_w_error("errno");
 	ft_strlcpy(gui->title, "so_long GUI", 39);
 	gui->width = game->map->w * PX;
 	gui->height = game->map->h * PX;
 	gui->win = mlx_new_window(gui->mlx, gui->width, gui->height, gui->title);
 	if (gui->win == NULL)
-		ft_exit_w_error("errno3");
+		ft_exit_w_error("errno");
 	return (gui);
 }
 
-t_game	*ft_initialize_game(char *map_file) //tendremos que pasarle el mapa
+// char	**ft_gen_map_grid(char *map_file, int w, int h)
+// {
+// 	char	grid[w][h];
+
+
+
+
+// }
+
+
+// int	ft_get_starting_x(char **grid)
+// {
+
+// }
+
+
+// int	ft_get_starting_x(char **grid)
+// {
+
+// }
+
+
+t_game	*ft_initialize_game(char *map_file)
 {
 	t_game	*game;
+	int		width;
+	int		height;
+	int		coll;
 
+	ft_check_map(map_file, &width, &height, &coll);
 	game = (t_game *)malloc(sizeof(t_game));
 	if (game == NULL)
 		ft_exit_w_error("errno");
+	game->steps = 0;
+	game->collectables = 0;
 	game->map = (t_map *)malloc(sizeof(t_map));
 	if (game->map == NULL)
 		ft_exit_w_error("errno");
-	game->steps = 0;
-	game->collectables = 0;
-	game->x_pos = 3; // change with map
-	game->y_pos = 7; // change with map
-	game->map->w = 20; // to be modified with map
-	game->map->h = 20; // to be modified with map
+	game->map->w = width;
+	game->map->h = height;
+	game->map->max_coll = coll;
+	// game->map->grid = ft_gen_map_grid(map_file, width, height);
+	game->x_pos = 2; // game->x_pos = ft_get_starting_x(game->map->grid);
+	game->y_pos = 2; // game->y_pos = ft_get_starting_y(game->map->grid);
 	game->gui = ft_initialize_gui(game);
 	ft_load_imgs(game);
 	ft_print_map(game);
@@ -121,8 +149,7 @@ int	main(int argc, char **argv)
 
 	if (argc == 2 && ft_ext_ok(*(argv + 1)))
 	{
-		ft_check_map(*(argv + 1));
-		game = ft_initialize_game(*(argv + 1)); //pasarle el mapa: game = ft_initialize_game(*(argv + 1));
+		game = ft_initialize_game(*(argv + 1));
 		
 		// DEFINE HOOKS:
 		// mlx_loop_hook(gui->mlx, ft_on_idle, &gui);

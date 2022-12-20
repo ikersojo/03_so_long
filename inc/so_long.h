@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/19 22:11:17 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 10:55:29 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,8 @@
 # define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
 # define WALL		"./assets/img48x48/xpm/wall/wall.xpm"
 # define COLL		"./assets/img48x48/xpm/collectable/coin_4.xpm"
-# define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
 # define PLAYER_U	"./assets/img48x48/xpm/player/player_up.xpm"
+# define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
 # define PLAYER_L	"./assets/img48x48/xpm/player/player_left.xpm"
 # define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
 
@@ -75,8 +75,7 @@ typedef struct s_gui
 // store all information about the map
 typedef struct s_map
 {
-	char	*path;
-	char	*content;
+	// char	**grid;
 	int		w;
 	int		h;
 	int		max_coll;
@@ -96,7 +95,7 @@ typedef struct s_game
 /*------POSSIBLE EVENTS------*/
 int		ft_on_destroy(int keycode, void *param);
 int		ft_on_keydown(int keycode, void *param);
-int		ft_on_idle(int keycode, void *param);
+// int		ft_on_idle(int keycode, void *param);
 void	ft_close_game(t_game *game);
 
 /*------PLAYER MOVEMENTS------*/
@@ -106,6 +105,6 @@ void	ft_move_left(t_game *game);
 void	ft_move_right(t_game *game);
 
 
-int		ft_check_map(char *str);
+int		ft_check_map(char *str, int *width, int *height, int *coll);
 
 #endif

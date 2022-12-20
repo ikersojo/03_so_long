@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:48:45 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/19 23:24:19 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/20 08:36:54 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static int	ft_check_rect(char *str, int *width, int *height)
 	while (1)
 	{
 		line = ft_gnl(mapfd);
-		if (ft_strlen(line) == 0)
-			break ;
 		line_length = ft_strlen(line);
+		if (line_length == 0)
+			break ;
 		if (*(line + line_length - 1) == '\n')
 			line_length -= 1;
 		if (*height == 0)
@@ -34,6 +34,7 @@ static int	ft_check_rect(char *str, int *width, int *height)
 		if (*width != line_length)
 				return (0);
 		(*height)++;
+		free (line);
 	}
 	close (mapfd);
 	if (*height < 3 || *width < 5)
@@ -87,7 +88,6 @@ static int	ft_check_chars(char *str, int *width, int *height, int *coll)
 			player += ft_count_chars(line, 'P');
 			exit += ft_count_chars(line, 'E');
 			*coll += ft_count_chars(line, 'C');
-			ft_printf("first char: %c - last char: %c\n", *line, *(line + *width - 1));
 			if (*line != '1' || *(line + *width - 1) != '1')
 			{
 				free(line);
@@ -97,10 +97,8 @@ static int	ft_check_chars(char *str, int *width, int *height, int *coll)
 		}
 	}
 	close (mapfd);
-	ft_printf("\n\nplayer: %d, exit: %d, coll: %d\n", player, exit, *coll);
 	if (player < 1 || exit < 1 || *coll < 1)
 		return (0);
-
 	return (1);
 }
 
@@ -110,22 +108,18 @@ static int	ft_check_chars(char *str, int *width, int *height, int *coll)
 // 	return (1);
 // }
 
-int	ft_check_map(char *str)
+int	ft_check_map(char *str, int *width, int *height, int *coll)
 {
-	int	height;
-	int	width;
-	int	coll;
-
-	width = 0;
-	height = 0;
-	coll = 0;
-	if (ft_check_rect(str, &width, &height) == 0)
+	*width = 0;
+	*height = 0;
+	*coll = 0;
+	if (ft_check_rect(str, width, height) == 0)
 		ft_exit_w_error("the maps does not have rectangular shape.\n");
-	ft_printf("map is rectangular (w:%d x h:%d) (%d collectables)\n", width, height, coll); // DEBUG
-	if (ft_check_chars(str, &width, &height, &coll) == 0)
+	ft_printf("\nmap is rectangular (w:%d x h:%d) \n", *width, *height); // DEBUG
+	if (ft_check_chars(str, width, height, coll) == 0)
 		ft_exit_w_error("the maps contains more/less chars than allowed.\n");
+	ft_printf("\nmap chars ok (w:%d x h:%d) (%d collectables)\n", *width, *height, *coll); // DEBUG
 	// if (ft_feasibility(str, &width, &height) == 0)
 	// 	ft_exit_w_error("the maps cannot be completed.\n");
-	ft_printf("map ok (w:%d x h:%d) (%d collectables)\n", width, height, coll); // DEBUG
 	return (1);
 }
