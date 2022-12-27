@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/09 15:28:36 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/10 20:39:51 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/24 08:26:53 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ CC			=	gcc
 AR			=	ar rc
 CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
+DEBUG		=	-g3 -fsanitize=address
 
 ## Extras:
 ### Colors:

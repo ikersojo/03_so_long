@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 14:23:51 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/24 08:28:25 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,11 @@
 # define PLAYER_L	"./assets/img48x48/xpm/player/player_left.xpm"
 # define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
 
-// store all information of each image
-// typedef struct s_img
-// {
-// 	void	*content;
-// 	void	*img_ptr;
-// 	char	*addr;
-// 	int		bpp;
-// 	int		line_len;
-// 	int		endian;
-// }			t_img;
-
 // store all information about the window
 typedef struct s_gui
 {
 	void	*mlx;
 	void	*win;
-	// char	title[40];
 	int		width;
 	int		height;
 	void	*img[IMG_COUNT];
@@ -75,7 +63,7 @@ typedef struct s_gui
 // store all information about the map
 typedef struct s_map
 {
-	// char	**grid;
+	char	**grid;
 	int		w;
 	int		h;
 	int		max_coll;
@@ -95,7 +83,7 @@ typedef struct s_game
 /*------POSSIBLE EVENTS------*/
 int		ft_on_destroy(int keycode, void *param);
 int		ft_on_keydown(int keycode, void *param);
-// int		ft_on_idle(int keycode, void *param);
+int		ft_on_idle(int keycode, void *param);
 void	ft_close_game(t_game *game);
 
 /*------PLAYER MOVEMENTS------*/

@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 14:30:55 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/24 09:11:47 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,15 @@ void	ft_close_game(t_game *game)
 	ft_printf("gui: (%p) being freed\n", game->gui); // DEBUG
 	free(game->gui);
 
+	i = 0;
+	while (i < game->map->h)
+	{
+		ft_printf("grid row %d (%p) being freed\n", i, *((game->map->grid) + i)); // DEBUG
+		free (*((game->map->grid) + i++));
+	}
+	ft_printf("grid array (%p) being freed\n", game->map->grid);
+	free(game->map->grid);
+
 	ft_printf("map: (%p) being freed\n", game->map); // DEBUG
 	free(game->map);
 
@@ -55,6 +64,7 @@ int	ft_on_destroy(int keycode, void *param)
 	game_ptr = param;
 	game = *game_ptr;
 	(void)game;
+	// ft_close_game(game); seg fault !
 	ft_printf("Exiting game...\n");
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -84,14 +94,14 @@ int	ft_on_keydown(int keycode, void *param)
 }
 
 // Idle event
-// int	ft_on_idle(int keycode, void *param)
-// {
-// 	t_game	**game_ptr;
-// 	t_game	*game;
-// 
-// 	game_ptr = param;
-// 	game = *game_ptr;
-// 	(void)keycode;
-// 	(void)game; // DEBUG
-// 	return (0);
-// }
+int	ft_on_idle(int keycode, void *param)
+{
+	t_game	**game_ptr;
+	t_game	*game;
+
+	game_ptr = param;
+	game = *game_ptr;
+	(void)keycode;
+	(void)game; // DEBUG
+	return (0);
+}

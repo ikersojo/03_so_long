@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/10 20:39:51 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/24 08:26:58 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,16 +27,13 @@ OBJS1	=	$(SRCS1:.c=.o)
 OBJS2	=	$(SRCS2:.m=.o)
 OBJS	=	$(OBJS2) $(OBJS1)
 
-
-## Compilation flags:
-
-
 ## Compilation flags:
 CC			=	gcc
 CFLAGS		+=	-O2
 CFLAGS		+=	-DSTRINGPUTX11 # add to match string put with X11 in size and position
 RM			=	rm -rf
 AR			=	ar rc
+DEBUG		=	-g3 -fsanitize=address
 
 ## Extras:
 ### Colors:

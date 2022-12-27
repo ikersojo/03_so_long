@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:44:23 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/20 14:23:51 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/24 10:53:25 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,27 +14,41 @@
 
 void	ft_print_map(t_game *game)
 {
-	int	i;
-	int	j;
+	int		i;
+	int		j;
+	char	**grid;
 
-	i = 0;
-	while (i < game->map->h)
+	grid = game->map->grid;
+	// Add floor
+	i = -1;
+	while (++i < game->map->h)
 	{
-		j = 0;
-		while (j < game->map->w)
-		{
-			mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[0], j * PX, i * PX);
-			
-			//DEBUG, to be replaced by map content...
-			if (i == 0 || i == game->map->h - 1)
-				mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[1], j * PX, i * PX);
-			
-			j++;
-		}
-		i++;
+		j = -1;
+		while (++j < game->map->w)
+			mlx_put_image_to_window(game->gui->mlx, game->gui->win, \
+				game->gui->img[0], j * PX, i * PX);
 	}
-	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3], game->x_pos * PX, (game->map->h - game->y_pos) * PX);
-
+	// Add walls
+	i = -1;
+	while (++i < game->map->h)
+	{
+		j = -1;
+		while (++j < game->map->w)
+		{
+			if (*(*(grid + i) + j)  == '1')
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win, \
+					game->gui->img[1], j * PX, i * PX);
+			else if (*(*(grid + i) + j)  == 'C')
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win, \
+					game->gui->img[2], j * PX, i * PX);
+			else if (*(*(grid + i) + j)  == 'E')
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win, \
+					game->gui->img[3], j * PX, i * PX); //modificar imagen
+		}
+	}
+	// Add player
+	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3],\
+		game->x_pos * PX, (game->map->h - game->y_pos) * PX);
 }
 
 void	ft_load_imgs(t_game *game)
@@ -79,27 +93,57 @@ t_gui	*ft_initialize_gui(t_game *game)
 	return (gui);
 }
 
-// char	**ft_gen_map_grid(char *map_file, int w, int h)
-// {
-// 	char	grid[w][h];
+char	**ft_gen_map_grid(char *map_file, int w, int h)
+{
+	char	**grid;
+	int		mapfd;
+	char	*line;
+	int		i;
+	int		j;
 
+	mapfd = open(map_file, O_RDONLY);
+	if (mapfd == -1)
+		ft_exit_w_error("errno");
+	grid = (char **)malloc(sizeof(char *) * h);
+	i = 0;
+	while (i < h)
+	{
+		line = ft_gnl(mapfd);
+		*(grid + i) = (char *)malloc(sizeof(char) * w);
+		j = -1;
+		while (++j < w)
+			*(*(grid + i) + j) = *(line + j);
+		i++;
+		free (line);
+	}
+	return (grid);
+}
 
+void	ft_get_starting_pos(t_game *game)
+{
+	int		i;
+	int		j;
+	char	**grid;
 
-
-// }
-
-
-// int	ft_get_starting_x(char **grid)
-// {
-
-// }
-
-
-// int	ft_get_starting_x(char **grid)
-// {
-
-// }
-
+	grid = game->map->grid;
+	i = 0;
+	while (i < game->map->h)
+	{
+		j = 0;
+		while (j < game->map->w)
+		{
+			if (*(*(grid + i) + j)  == 'P')
+			{
+				game->y_pos = i;
+				game->x_pos = j;
+				ft_printf("starting pos: x = %d, y = %d\n", game->x_pos, game->y_pos); // DEBUG
+				return ;
+			}
+			j++;
+		}
+		i++;
+	}
+}
 
 t_game	*ft_initialize_game(char *map_file)
 {
@@ -120,33 +164,25 @@ t_game	*ft_initialize_game(char *map_file)
 	game->map->w = width;
 	game->map->h = height;
 	game->map->max_coll = coll;
-	// game->map->grid = ft_gen_map_grid(map_file, width, height);
-	game->x_pos = 2; // game->x_pos = ft_get_starting_x(game->map->grid);
-	game->y_pos = 2; // game->y_pos = ft_get_starting_y(game->map->grid);
+	game->map->grid = ft_gen_map_grid(map_file, width, height);
+	ft_get_starting_pos(game);
 	game->gui = ft_initialize_gui(game);
 	ft_load_imgs(game);
 	ft_print_map(game);
 	return (game);
 }
 
-static int	ft_ext_ok(char *str)
-{
-	if (!ft_strnstr(str + ft_strlen(str) - 4, ".ber", 4))
-		return (0);
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_game	*game;
 
-	if (argc == 2 && ft_ext_ok(*(argv + 1)))
+	if (argc == 2 && ft_ext_ok(*(argv + 1), ".ber"))
 	{
 		game = ft_initialize_game(*(argv + 1));
 		
 		// DEFINE HOOKS:
-		// mlx_loop_hook(gui->mlx, ft_on_idle, &gui);
-		mlx_hook(game->gui->win, ON_DESTROY, 0, ft_on_destroy, &game);
+		mlx_loop_hook(game->gui->mlx, ft_on_idle, &game);
+		mlx_hook(game->gui->win, ON_DESTROY, 1L << 17, ft_on_destroy, &game);
 		mlx_hook(game->gui->win, ON_KEYDOWN, 0, ft_on_keydown, &game);
 
 		// Initialize GUI
