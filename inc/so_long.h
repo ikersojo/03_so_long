@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/24 08:28:25 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/28 11:55:30 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define ON_DESTROY		17
 
 // Assets location
-# define IMG_COUNT	7
+# define IMG_COUNT	9
 # define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
 # define WALL		"./assets/img48x48/xpm/wall/wall.xpm"
 # define COLL		"./assets/img48x48/xpm/collectable/coin_4.xpm"
@@ -49,6 +49,8 @@
 # define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
 # define PLAYER_L	"./assets/img48x48/xpm/player/player_left.xpm"
 # define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
+# define EXIT_C		"./assets/img48x48/xpm/player/player_right.xpm" //modificar
+# define EXIT_O		"./assets/img48x48/xpm/player/player_left.xpm" // modificar
 
 // store all information about the window
 typedef struct s_gui
@@ -95,4 +97,6 @@ void	ft_move_right(t_game *game);
 
 int		ft_check_map(char *str, int *width, int *height, int *coll);
 
+t_game	*ft_initialize_game(char *map_file);
+void	ft_print_map(t_game *game);
 #endif
