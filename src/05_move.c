@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:45:35 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 12:11:05 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:41:44 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_move_down(t_game *game)
 		game->collectables++;
 		if (game->collectables == game->map->max_coll)
 		{
-			//animación de cambio de salida
+			mlx_put_image_to_window(gui->mlx, gui->win,
+				gui->img[8], game->x_exit * PX, game->y_exit * PX);
 			ft_printf("Exit openned!\n");
 		}
 	}
@@ -63,7 +64,8 @@ void	ft_move_up(t_game *game)
 		game->collectables++;
 		if (game->collectables == game->map->max_coll)
 		{
-			//animación de cambio de salida
+			mlx_put_image_to_window(gui->mlx, gui->win,
+				gui->img[8], game->x_exit * PX, game->y_exit * PX);
 			ft_printf("Exit openned!\n");
 		}
 	}
@@ -99,7 +101,8 @@ void	ft_move_left(t_game *game)
 		game->collectables++;
 		if (game->collectables == game->map->max_coll)
 		{
-			//animación de cambio de salida
+			mlx_put_image_to_window(gui->mlx, gui->win,
+				gui->img[8], game->x_exit * PX, game->y_exit * PX);
 			ft_printf("Exit openned!\n");
 		}
 	}
@@ -135,7 +138,8 @@ void	ft_move_right(t_game *game)
 		game->collectables++;
 		if (game->collectables == game->map->max_coll)
 		{
-			//animación de cambio de salida
+			mlx_put_image_to_window(gui->mlx, gui->win,
+				gui->img[8], game->x_exit * PX, game->y_exit * PX);
 			ft_printf("Exit openned!\n");
 		}
 	}

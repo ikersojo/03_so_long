@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 11:55:30 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:37:14 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ typedef struct s_game
 	int		y_pos;
 	int		steps;
 	int		collectables;
+	int		x_exit;
+	int		y_exit;
 }			t_game;
 
 /*------POSSIBLE EVENTS------*/

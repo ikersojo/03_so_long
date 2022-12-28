@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 11:34:25 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:33:49 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ int	ft_on_keydown(int keycode, void *param)
 		ft_move_right(game);
 	// system("clear");
 	ft_printf("steps: %d (x: %d, y: %d)\n", game->steps, game->x_pos, game->y_pos); // sustituir estas 2 por una guay
+	ft_printf("collectables: %d / %d\n", game->collectables, game->map->max_coll); // sustituir estas 2 por una guay
 	return (0);
 }
 
