@@ -6,7 +6,7 @@
 #    By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/20 16:19:35 by isojo-go          #+#    #+#              #
-#    Updated: 2022/12/24 08:26:08 by isojo-go         ###   ########.fr        #
+#    Updated: 2022/12/30 13:09:40 by isojo-go         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 RM			=	rm -rf
 DEBUG		=	-g3 -fsanitize=address -static-libsan
+BONUS		=	./bonus/00_allowed_chars_bonus.c
+NO_BONUS	=	./bonus/00_allowed_chars.c
 
 ## Extras:
 ### Colors:
@@ -54,12 +56,17 @@ WHITE = \033[0;97m
 
 # --- Makefile instructions ---
 
-all:		libft libmlx $(NAME)
+all:		$(NAME)
 
-$(NAME):	$(OBJ)
+$(NAME):	libft libmlx $(OBJ)
 			@mkdir -p $(BINDIR)
-			@$(CC) $(OBJ) $(LIBS) $(HEADERS) -o ./$(BINDIR)/$(NAME)
+			@$(CC) $(OBJ) $(LIBS) $(NO_BONUS) $(HEADERS) -o ./$(BINDIR)/$(NAME)
 			@echo "$(GREEN)$(NAME) compiled!$(DEF_COLOR)"
+
+bonus:		libft libmlx $(OBJ)
+			@mkdir -p $(BINDIR)
+			@$(CC) $(OBJ) $(LIBS) $(BONUS) $(HEADERS) -o ./$(BINDIR)/$(NAME)
+			@echo "$(GREEN)$(NAME) (bonus) compiled!$(DEF_COLOR)"
 
 debug:		libft libmlx $(OBJ)
 			@mkdir -p $(BINDIR)

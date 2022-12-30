@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:48:45 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/29 22:29:59 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:22:49 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,30 +72,32 @@ static void	update_vars(char *line, int *player, int *exit, int *coll)
 		*coll += ft_count_chars(line, 'C');
 }
 
+// v: i, player, exit, mapfd
 int	ft_check_chars(char *str, int *w, int *h, int *coll)
 {
-	int		mapfd;
+	int		v[4];
 	char	*l;
-	int		i;
-	int		player_exit[2];
+	char	*valid;
 
-	mapfd = open(str, O_RDONLY);
-	initialize_vars(&i, &player_exit[0], &player_exit[1]);
-	while (++i < *h && i > -2)
+	valid = ft_allowed_c();
+	v[3] = open(str, O_RDONLY);
+	initialize_vars(&v[2], &v[0], &v[1]);
+	while (++v[2] < *h && v[2] > -2)
 	{
-		l = ft_gnl(mapfd);
-		if ((i == 0 || i == *h - 1) && (ft_count_chars(l, '1') != *w))
-			i = -10;
-		else if (i != 0 && i != *h - 1)
+		l = ft_gnl(v[3]);
+		if ((v[2] == 0 || v[2] == *h - 1) && (ft_count_chars(l, '1') != *w))
+			v[2] = -10;
+		else if (v[2] != 0 && v[2] != *h - 1)
 		{
-			update_vars(l, &player_exit[0], &player_exit[1], coll);
-			if (*l != '1' || *(l + *w - 1) != '1' || !ft_only_c(l, "01EPC\n"))
-				i = -10;
+			update_vars(l, &v[0], &v[1], coll);
+			if (*l != '1' || *(l + *w - 1) != '1' || !ft_only_c(l, valid))
+				v[2] = -10;
 		}
 		free (l);
 	}
-	close (mapfd);
-	if (player_exit[0] != 1 || player_exit[1] != 1 || *coll < 1 || i < -2)
+	free (valid);
+	close (v[3]);
+	if (v[0] != 1 || v[1] != 1 || *coll < 1 || v[2] < -2)
 		return (0);
 	return (1);
 }

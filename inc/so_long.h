@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/30 11:15:23 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:10:30 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@
 # define ON_DESTROY		17
 
 // Assets location
-# define IMG_COUNT	17
+# define IMG_COUNT	18
 # define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
 # define WALL		"./assets/img48x48/xpm/wall/wall.xpm"
 # define COLL		"./assets/img48x48/xpm/collectable/coin_3.xpm"
@@ -59,6 +59,7 @@
 # define COLL_A_6	"./assets/img48x48/xpm/collectable/coin_6.xpm"
 # define COLL_A_7	"./assets/img48x48/xpm/collectable/coin_7.xpm"
 # define COLL_A_8	"./assets/img48x48/xpm/collectable/coin_8.xpm"
+# define ENEMY		"./assets/img48x48/xpm/enemy/enemy.xpm"
 
 // required to avoid max arg limitation on map floodfill check
 typedef struct s_size
@@ -115,6 +116,7 @@ int		ft_check_rect(char *str, int *width, int *height);
 int		ft_check_chars(char *str, int *w, int *h, int *coll);
 char	**ft_gen_map_grid(char *map_file, int w, int h);
 int		ft_feasibility(char *str, int width, int height);
+char	*ft_allowed_c(void);
 
 /*------PRINT to SCREEN------*/
 t_game	*ft_initialize_game(char *map_file);

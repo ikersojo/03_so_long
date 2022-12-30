@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:49:46 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/30 12:04:55 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:24:13 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ static void	ft_load_imgs(t_game *game)
 	ft_strlcpy(files[14], COLL_A_6, 79);
 	ft_strlcpy(files[15], COLL_A_7, 79);
 	ft_strlcpy(files[16], COLL_A_8, 79);
+	ft_strlcpy(files[17], ENEMY, 79);
 	i = -1;
 	while (++i < IMG_COUNT)
 		ft_load(game, files[i], i);
@@ -119,5 +120,6 @@ t_game	*ft_initialize_game(char *map_file)
 	game->gui = ft_initialize_gui(game);
 	ft_load_imgs(game);
 	ft_print_map(game);
+	ft_print_counters(game);
 	return (game);
 }

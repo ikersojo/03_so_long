@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/28 09:25:55 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/29 22:38:06 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:26:10 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,28 +67,29 @@ static void	ft_add_floor(t_game *game)
 
 void	ft_print_map(t_game *game)
 {
-	int		i;
-	int		j;
+	int		i[2];
 
 	ft_add_floor(game);
-	i = -1;
-	while (++i < game->map->h)
+	i[0] = -1;
+	while (++i[0] < game->map->h)
 	{
-		j = -1;
-		while (++j < game->map->w)
+		i[1] = -1;
+		while (++i[1] < game->map->w)
 		{
-			if (*(*(game->map->grid + i) + j) == '1')
+			if (*(*(game->map->grid + i[0]) + i[1]) == '1')
 				mlx_put_image_to_window(game->gui->mlx, game->gui->win,
-					game->gui->img[1], j * PX, i * PX);
-			else if (*(*(game->map->grid + i) + j) == 'C')
+					game->gui->img[1], i[1] * PX, i[0] * PX);
+			else if (*(*(game->map->grid + i[0]) + i[1]) == 'C')
 				mlx_put_image_to_window(game->gui->mlx, game->gui->win,
-					game->gui->img[2], j * PX, i * PX);
-			else if (*(*(game->map->grid + i) + j) == 'E')
+					game->gui->img[2], i[1] * PX, i[0] * PX);
+			else if (*(*(game->map->grid + i[0]) + i[1]) == 'E')
 				mlx_put_image_to_window(game->gui->mlx, game->gui->win,
-					game->gui->img[7], j * PX, i * PX);
+					game->gui->img[7], i[1] * PX, i[0] * PX);
+			else if (*(*(game->map->grid + i[0]) + i[1]) == 'Z')
+				mlx_put_image_to_window(game->gui->mlx, game->gui->win,
+					game->gui->img[17], i[1] * PX, i[0] * PX);
 		}
 	}
 	mlx_put_image_to_window(game->gui->mlx, game->gui->win, game->gui->img[3],
 		game->x_pos * PX, game->y_pos * PX);
-	ft_print_counters(game);
 }

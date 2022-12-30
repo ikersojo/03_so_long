@@ -6,50 +6,28 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/30 11:30:02 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:29:32 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
-//destroy img, win, free all and exit
 void	ft_close_game(t_game *game)
 {
 	int	i;
 
 	i = 0;
 	while (i < IMG_COUNT)
-	{
-		ft_printf("img[%d]: (%p) being freed\n", i, game->gui->img[i]); // DEBUG
 		mlx_destroy_image(game->gui->mlx, game->gui->img[i++]);
-	}
-
-	ft_printf("\nwin: (%p) being destroyed\n", game->gui->win); // DEBUG
 	mlx_destroy_window(game->gui->mlx, game->gui->win);
-
-	ft_printf("mlx: (%p) being freed\n", game->gui->mlx); // DEBUG
 	free(game->gui->mlx);
-
-	ft_printf("gui: (%p) being freed\n", game->gui); // DEBUG
 	free(game->gui);
-
 	i = 0;
 	while (i < game->map->h)
-	{
-		ft_printf("grid row %d (%p) being freed\n", i, *((game->map->grid) + i)); // DEBUG
 		free (*((game->map->grid) + i++));
-	}
-	ft_printf("grid array (%p) being freed\n", game->map->grid);
 	free(game->map->grid);
-
-	ft_printf("map: (%p) being freed\n", game->map); // DEBUG
 	free(game->map);
-
-	ft_printf("game: (%p) being freed\n", game); // DEBUG
 	free(game);
-
-	//...no function to delete "display": potential leaks...
-	
 	ft_printf("Exiting game...\n");
 	exit(EXIT_SUCCESS);
 }
