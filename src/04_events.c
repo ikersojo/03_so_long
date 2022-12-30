@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   04_events.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/30 13:29:32 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 18:30:09 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ int	ft_on_destroy(int keycode, void *param)
 	game_ptr = param;
 	game = *game_ptr;
 	(void)game;
-	// ft_close_game(game); seg fault !
 	ft_printf("Exiting game...\n");
 	exit(EXIT_SUCCESS);
 	return (0);
@@ -66,7 +65,7 @@ int	ft_on_keydown(int keycode, void *param)
 		ft_move(game, 1, 0, 6);
 	system("clear");
 	ft_printf("steps: %d\n", game->steps);
-	ft_printf("collectables: %d / %d\n", game->collectables, 
+	ft_printf("collectables: %d / %d\n", game->collectables,
 		game->map->max_coll);
 	ft_print_counters(game);
 	ft_turn_coin(game);
