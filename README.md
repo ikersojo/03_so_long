@@ -20,7 +20,7 @@ The programme will generate all the object files of the compiled c files in the 
 ## Valid maps
 A set of maps os porvided in the ./maps/ folder. NOte that one key aspect of the project is to be able to validate th emaps before launching the game.
 
-<img  width="300" src="https://github.com/ikersojo/03_so_long/blob/main/doc/imgs/map_file.png\?raw\=true">
+<img  width="100" src="https://github.com/ikersojo/03_so_long/blob/main/doc/imgs/map_file.png\?raw\=true">
 
 | Char | Description |
 | - | - |
@@ -37,8 +37,10 @@ Execued as:
 ./bin/so_long ./maps/valid/valid_1.ber
 ```
 The console will output the checks of the map: rectangular shape, allowed characters only and game feasibility (i.e. if it can be completed or not).
+
 <img  width="300" src="https://github.com/ikersojo/03_so_long/blob/main/doc/imgs/example_console.png\?raw\=true">
-<img  width="300" src="https://github.com/ikersojo/03_so_long/blob/main/doc/imgs/example_game.png\?raw\=true">
+
+<img  width="500" src="https://github.com/ikersojo/03_so_long/blob/main/doc/imgs/example_game.png\?raw\=true">
 
 # Minilibx
 The programme includes, compiles and uses minilibx library. There are multiple versions (more updated, robust and featured) on the internet, but follwoing 42 staff recommendation, the library provided in the subject has been used. Teh documentation of such libraries is helful to understand the behaviour of the minilibx.
