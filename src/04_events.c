@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   04_events.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/16 15:55:56 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 12:33:49 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:30:02 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	ft_close_game(t_game *game)
 	exit(EXIT_SUCCESS);
 }
 
-// Event triggered by closing window (red button)
 int	ft_on_destroy(int keycode, void *param)
 {
 	t_game	**game_ptr;
@@ -70,31 +69,32 @@ int	ft_on_destroy(int keycode, void *param)
 	return (0);
 }
 
-// Event triggered by key press
 int	ft_on_keydown(int keycode, void *param)
 {
-	t_game	**game_ptr;
-	t_game	*game;
+	t_game		**game_ptr;
+	t_game		*game;
 
 	game_ptr = param;
 	game = *game_ptr;
 	if (keycode == KEY_ESC)
 		ft_close_game(game);
 	else if (keycode == KEY_W || keycode == KEY_UP)
-		ft_move_up(game);
+		ft_move(game, 0, -1, 4);
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
-		ft_move_down(game);
+		ft_move(game, 0, 1, 3);
 	else if (keycode == KEY_A || keycode == KEY_LEFT)
-		ft_move_left(game);
+		ft_move(game, -1, 0, 5);
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
-		ft_move_right(game);
-	// system("clear");
-	ft_printf("steps: %d (x: %d, y: %d)\n", game->steps, game->x_pos, game->y_pos); // sustituir estas 2 por una guay
-	ft_printf("collectables: %d / %d\n", game->collectables, game->map->max_coll); // sustituir estas 2 por una guay
+		ft_move(game, 1, 0, 6);
+	system("clear");
+	ft_printf("steps: %d\n", game->steps);
+	ft_printf("collectables: %d / %d\n", game->collectables, 
+		game->map->max_coll);
+	ft_print_counters(game);
+	ft_turn_coin(game);
 	return (0);
 }
 
-// Idle event
 int	ft_on_idle(int keycode, void *param)
 {
 	t_game	**game_ptr;
@@ -103,6 +103,6 @@ int	ft_on_idle(int keycode, void *param)
 	game_ptr = param;
 	game = *game_ptr;
 	(void)keycode;
-	(void)game; // DEBUG
+	(void)game;
 	return (0);
 }

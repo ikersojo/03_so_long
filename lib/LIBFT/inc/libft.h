@@ -6,7 +6,7 @@
 /*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 10:55:39 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/24 10:51:59 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/29 21:27:16 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,7 @@ void		ft_exit_w_error(char *str);
 void		ft_run_command(char *str, char **envp);
 char		*ft_get_user_input(char *str);
 int			ft_ext_ok(char *filename, char *ext);
+int			ft_count_chars(char *str, char c);
+int			ft_only_c(char *str, char *valid_chars);
 
 #endif

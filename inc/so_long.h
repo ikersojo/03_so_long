@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 19:44:59 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 12:37:14 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:15:23 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,31 @@
 # define ON_DESTROY		17
 
 // Assets location
-# define IMG_COUNT	9
+# define IMG_COUNT	17
 # define FLOOR		"./assets/img48x48/xpm/floor/grass.xpm"
 # define WALL		"./assets/img48x48/xpm/wall/wall.xpm"
-# define COLL		"./assets/img48x48/xpm/collectable/coin_4.xpm"
+# define COLL		"./assets/img48x48/xpm/collectable/coin_3.xpm"
 # define PLAYER_U	"./assets/img48x48/xpm/player/player_up.xpm"
 # define PLAYER_D	"./assets/img48x48/xpm/player/player_down.xpm"
 # define PLAYER_L	"./assets/img48x48/xpm/player/player_left.xpm"
 # define PLAYER_R	"./assets/img48x48/xpm/player/player_right.xpm"
-# define EXIT_C		"./assets/img48x48/xpm/player/player_right.xpm" //modificar
-# define EXIT_O		"./assets/img48x48/xpm/player/player_left.xpm" // modificar
+# define EXIT_C		"./assets/img48x48/xpm/exit/exit_c.xpm"
+# define EXIT_O		"./assets/img48x48/xpm/exit/exit_o.xpm"
+# define COLL_A_1	"./assets/img48x48/xpm/collectable/coin_1.xpm"
+# define COLL_A_2	"./assets/img48x48/xpm/collectable/coin_2.xpm"
+# define COLL_A_3	"./assets/img48x48/xpm/collectable/coin_3.xpm"
+# define COLL_A_4	"./assets/img48x48/xpm/collectable/coin_4.xpm"
+# define COLL_A_5	"./assets/img48x48/xpm/collectable/coin_5.xpm"
+# define COLL_A_6	"./assets/img48x48/xpm/collectable/coin_6.xpm"
+# define COLL_A_7	"./assets/img48x48/xpm/collectable/coin_7.xpm"
+# define COLL_A_8	"./assets/img48x48/xpm/collectable/coin_8.xpm"
+
+// required to avoid max arg limitation on map floodfill check
+typedef struct s_size
+{
+	int	w;
+	int	h;
+}		t_size;
 
 // store all information about the window
 typedef struct s_gui
@@ -82,6 +97,7 @@ typedef struct s_game
 	int		collectables;
 	int		x_exit;
 	int		y_exit;
+	int		frame;
 }			t_game;
 
 /*------POSSIBLE EVENTS------*/
@@ -91,14 +107,19 @@ int		ft_on_idle(int keycode, void *param);
 void	ft_close_game(t_game *game);
 
 /*------PLAYER MOVEMENTS------*/
-void	ft_move_up(t_game *game);
-void	ft_move_down(t_game *game);
-void	ft_move_left(t_game *game);
-void	ft_move_right(t_game *game);
+void	ft_move(t_game *game, int x, int y, int player_img);
 
-
+/*------MAP CHECKS------*/
 int		ft_check_map(char *str, int *width, int *height, int *coll);
+int		ft_check_rect(char *str, int *width, int *height);
+int		ft_check_chars(char *str, int *w, int *h, int *coll);
+char	**ft_gen_map_grid(char *map_file, int w, int h);
+int		ft_feasibility(char *str, int width, int height);
 
+/*------PRINT to SCREEN------*/
 t_game	*ft_initialize_game(char *map_file);
 void	ft_print_map(t_game *game);
+void	ft_print_counters(t_game *game);
+void	ft_turn_coin(t_game *game);
+
 #endif

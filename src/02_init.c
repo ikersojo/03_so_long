@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   02_init.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: isojo-go <isojo-go@student.42.fr>          +#+  +:+       +#+        */
+/*   By: isojo-go <isojo-go@student.42urduliz.co    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/18 21:49:46 by isojo-go          #+#    #+#             */
-/*   Updated: 2022/12/28 11:55:40 by isojo-go         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:04:55 by isojo-go         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/so_long.h"
 
+static void	ft_load(t_game *game, char *path, int i)
+{
+	int		w;
+	int		h;
+
+	game->gui->img[i] = mlx_xpm_file_to_image(game->gui->mlx, path, &w, &h);
+	if (game->gui->img[i] == NULL)
+		ft_exit_w_error(".xpm file not found");
+}
+
 static void	ft_load_imgs(t_game *game)
 {
-	int		width;
-	int		height;
-	int		i;
 	char	files[IMG_COUNT][80];
+	int		i;
 
 	ft_strlcpy(files[0], FLOOR, 79);
 	ft_strlcpy(files[1], WALL, 79);
@@ -28,17 +36,17 @@ static void	ft_load_imgs(t_game *game)
 	ft_strlcpy(files[6], PLAYER_R, 79);
 	ft_strlcpy(files[7], EXIT_C, 79);
 	ft_strlcpy(files[8], EXIT_O, 79);
-	//añadir enemigos
-	//añadir necesarias para animaciones
+	ft_strlcpy(files[9], COLL_A_1, 79);
+	ft_strlcpy(files[10], COLL_A_2, 79);
+	ft_strlcpy(files[11], COLL_A_3, 79);
+	ft_strlcpy(files[12], COLL_A_4, 79);
+	ft_strlcpy(files[13], COLL_A_5, 79);
+	ft_strlcpy(files[14], COLL_A_6, 79);
+	ft_strlcpy(files[15], COLL_A_7, 79);
+	ft_strlcpy(files[16], COLL_A_8, 79);
 	i = -1;
 	while (++i < IMG_COUNT)
-	{
-		// comprobar que existe el fichero de imagen
-		game->gui->img[i] = mlx_xpm_file_to_image(game->gui->mlx, files[i],
-			&width, &height);
-		if (game->gui->img[i] == NULL)
-			ft_exit_w_error("errno");
-	}
+		ft_load(game, files[i], i);
 }
 
 static t_gui	*ft_initialize_gui(t_game *game)
@@ -59,32 +67,6 @@ static t_gui	*ft_initialize_gui(t_game *game)
 	return (gui);
 }
 
-static char	**ft_gen_map_grid(char *map_file, int w, int h)
-{
-	char	**grid;
-	int		mapfd;
-	char	*line;
-	int		i;
-	int		j;
-
-	mapfd = open(map_file, O_RDONLY);
-	if (mapfd == -1)
-		ft_exit_w_error("errno");
-	grid = (char **)malloc(sizeof(char *) * h);
-	i = 0;
-	while (i < h)
-	{
-		line = ft_gnl(mapfd);
-		*(grid + i) = (char *)malloc(sizeof(char) * w);
-		j = -1;
-		while (++j < w)
-			*(*(grid + i) + j) = *(line + j);
-		i++;
-		free (line);
-	}
-	return (grid);
-}
-
 static void	ft_get_starting_pos(t_game *game)
 {
 	int		i;
@@ -92,22 +74,23 @@ static void	ft_get_starting_pos(t_game *game)
 	char	**grid;
 
 	grid = game->map->grid;
-	i = 0;
-	while (i < game->map->h)
+	i = -1;
+	while (++i < game->map->h)
 	{
-		j = 0;
-		while (j < game->map->w)
+		j = -1;
+		while (++j < game->map->w)
 		{
-			if (*(*(grid + i) + j)  == 'P')
+			if (*(*(grid + i) + j) == 'P')
 			{
 				game->y_pos = i;
 				game->x_pos = j;
-				ft_printf("starting pos: x = %d, y = %d\n", game->x_pos, game->y_pos); // DEBUG
-				return ;
 			}
-			j++;
+			else if (*(*(grid + i) + j) == 'E')
+			{
+				game->y_exit = i;
+				game->x_exit = j;
+			}
 		}
-		i++;
 	}
 }
 
@@ -124,6 +107,7 @@ t_game	*ft_initialize_game(char *map_file)
 		ft_exit_w_error("errno");
 	game->steps = 0;
 	game->collectables = 0;
+	game->frame = 0;
 	game->map = (t_map *)malloc(sizeof(t_map));
 	if (game->map == NULL)
 		ft_exit_w_error("errno");
